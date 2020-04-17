@@ -1,5 +1,12 @@
 const express = require("express");
+var bodyParser = require("body-parser");
+const Orders = require("./db");
+var cors = require("cors");
+
 const app = express();
+
+app.use(bodyParser.json());
+app.use(cors());
 
 const port = 5000;
 
@@ -15,7 +22,40 @@ app.get("/", (req, res) => {
 app.get("/technologies", (req, res) => {
   res.json([
     { name: "React", maintainer: "Facebook" },
-    { name: "Angular", maintainer: "Google" }
+    { name: "Angular", maintainer: "Google" },
+    { name: "Angular", maintainer: "Google" },
+  ]);
+});
+
+app.get("/orders", (request, response) => {
+  Orders.find({}).then((orders) => {
+    response.json(orders.map((order) => order.toJSON()));
+    console.log(orders);
+  });
+});
+
+app.post("/postOrder", (request, response, next) => {
+  const { naziv, cena, datum } = request.body;
+  console.log(request.body);
+
+  const orders = new Orders({
+    naziv: naziv,
+    cena: cena,
+    datum: datum,
+  });
+
+  orders
+    .save()
+    .then((savedOrder) => {
+      response.json(savedOrder.toJSON());
+    })
+    .catch((error) => next(error));
+});
+
+app.get("/test", (req, res) => {
+  res.json([
+    { name: "React", maintainer: "Facebook" },
+    { name: "Angular", maintainer: "Google" },
   ]);
 });
 

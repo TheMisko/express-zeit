@@ -8,12 +8,22 @@
       "methods": ["GET"]
     },
     {
-      "src": "/users",
+      "src": "/technologies",
       "dest": "/server.js",
       "methods": ["GET"]
     },
     {
-      "src": "/user",
+      "src": "/orders",
+      "dest": "/server.js",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/postOrder",
+      "dest": "/server.js",
+      "methods": ["POST"]
+      
+    },{
+      "src": "/technology",
       "dest": "/server.js",
       "methods": ["POST"]
     }
